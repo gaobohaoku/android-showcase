@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
-import com.igorwojda.showcase.base.delegate.observer
-import com.igorwojda.showcase.base.presentation.extension.hide
-import com.igorwojda.showcase.base.presentation.extension.setOnDebouncedClickListener
-import com.igorwojda.showcase.base.presentation.extension.show
+import com.igorwojda.showcase.base.common.delegate.observer
+import com.igorwojda.showcase.base.presentation.ext.hide
+import com.igorwojda.showcase.base.presentation.ext.setOnDebouncedClickListener
+import com.igorwojda.showcase.base.presentation.ext.show
 import com.igorwojda.showcase.feature.album.R
-import com.igorwojda.showcase.feature.album.databinding.FragmentAlbumListItemBinding
+import com.igorwojda.showcase.feature.album.databinding.ItemAlbumListBinding
 import com.igorwojda.showcase.feature.album.domain.model.Album
 
 internal class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.ViewHolder>() {
@@ -23,7 +23,7 @@ internal class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentAlbumListItemBinding.inflate(inflater, parent, false)
+        val binding = ItemAlbumListBinding.inflate(inflater, parent, false)
 
         return ViewHolder(binding)
     }
@@ -35,10 +35,10 @@ internal class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.ViewHolder>() {
     override fun getItemCount(): Int = albums.size
 
     fun setOnDebouncedClickListener(listener: (album: Album) -> Unit) {
-        this.onDebouncedClickListener = listener
+        onDebouncedClickListener = listener
     }
 
-    internal inner class ViewHolder(private val binding: FragmentAlbumListItemBinding) :
+    internal inner class ViewHolder(private val binding: ItemAlbumListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private var url by observer<String?>(null) {
