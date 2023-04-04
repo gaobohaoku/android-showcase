@@ -1,5 +1,6 @@
 import com.android.build.api.dsl.ApplicationDefaultConfig
 
+@Suppress("DSL_SCOPE_VIOLATION") // Because of IDE bug https://youtrack.jetbrains.com/issue/KTIJ-19370
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -11,6 +12,8 @@ plugins {
 }
 
 android {
+    namespace = "com.igorwojda.showcase"
+
     compileSdk = 33
 
     defaultConfig {
@@ -47,6 +50,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
     }
 
     compileOptions {
@@ -60,6 +68,12 @@ android {
 
     testOptions {
         unitTests.isReturnDefaultValues = true
+    }
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 

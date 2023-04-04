@@ -1,3 +1,4 @@
+@Suppress("DSL_SCOPE_VIOLATION") // Because of IDE bug https://youtrack.jetbrains.com/issue/KTIJ-19370
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -9,11 +10,12 @@ plugins {
 }
 
 android {
+    namespace = "com.igorwojda.showcase.library.testutils"
+
     compileSdk = 33
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -24,8 +26,23 @@ android {
             "META-INF/AL2.0",
             "META-INF/licenses/**",
             "**/attach_hotspot_windows.dll",
-            "META-INF/LGPL2.1"
+            "META-INF/LGPL2.1",
         )
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 

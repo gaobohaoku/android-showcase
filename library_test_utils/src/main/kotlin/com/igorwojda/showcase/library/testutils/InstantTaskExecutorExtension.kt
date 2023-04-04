@@ -14,22 +14,24 @@ import org.junit.jupiter.api.extension.ExtensionContext
  * Extension can be used for your host side tests that use Architecture Components.
  */
 // Android lint complains about exceeding access rights to ArchTaskExecutor
-// More: https://issuetracker.google.com/u/0/issues/79189568
+// See https://issuetracker.google.com/u/0/issues/79189568
 @SuppressLint("RestrictedApi")
 class InstantTaskExecutorExtension : BeforeEachCallback, AfterEachCallback {
 
     override fun beforeEach(context: ExtensionContext) {
-        ArchTaskExecutor.getInstance().setDelegate(object : TaskExecutor() {
-            override fun executeOnDiskIO(runnable: Runnable) {
-                runnable.run()
-            }
+        ArchTaskExecutor.getInstance().setDelegate(
+            object : TaskExecutor() {
+                override fun executeOnDiskIO(runnable: Runnable) {
+                    runnable.run()
+                }
 
-            override fun postToMainThread(runnable: Runnable) {
-                runnable.run()
-            }
+                override fun postToMainThread(runnable: Runnable) {
+                    runnable.run()
+                }
 
-            override fun isMainThread() = true
-        })
+                override fun isMainThread() = true
+            },
+        )
     }
 
     override fun afterEach(context: ExtensionContext?) {

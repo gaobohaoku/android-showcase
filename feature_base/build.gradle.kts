@@ -1,3 +1,4 @@
+@Suppress("DSL_SCOPE_VIOLATION") // Because of IDE bug https://youtrack.jetbrains.com/issue/KTIJ-19370
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -9,11 +10,12 @@ plugins {
 }
 
 android {
+    namespace = "com.igorwojda.showcase.base"
+
     compileSdk = 33
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -28,6 +30,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
     }
 
     compileOptions {
@@ -44,27 +51,34 @@ android {
     }
 }
 
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
 dependencies {
     // See Dependency management section in the README.md
     // https://github.com/igorwojda/android-showcase#dependency-management
     api(libs.kotlin)
-    api(libs.koin)
-    api(libs.bundles.retrofit)
     api(libs.playCore)
     api(libs.coreKtx)
     api(libs.fragmentKtx)
-    api(libs.bundles.navigation)
-    api(libs.bundles.lifecycle)
-    api(libs.bundles.room)
     api(libs.viewBindingPropertyDelegate)
     api(libs.timber)
-    api(libs.coil)
     api(libs.constraintLayout)
     api(libs.appCompat)
     api(libs.recyclerView)
-    api(libs.material)
     api(libs.coroutines)
-    api(libs.lottie)
+    api(libs.material)
+    api(libs.composeMaterial)
+    api(libs.accompanistFlowLayout)
+    api(libs.bundles.koin)
+    api(libs.bundles.retrofit)
+    api(libs.bundles.navigation)
+    api(libs.bundles.lifecycle)
+    api(libs.bundles.room)
+    api(libs.bundles.compose)
 
     testImplementation(projects.libraryTestUtils)
     testImplementation(libs.bundles.test)

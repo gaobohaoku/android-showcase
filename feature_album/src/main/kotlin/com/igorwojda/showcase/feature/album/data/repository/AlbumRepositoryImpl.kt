@@ -9,13 +9,14 @@ import com.igorwojda.showcase.feature.album.data.datasource.database.AlbumDao
 import com.igorwojda.showcase.feature.album.data.datasource.database.model.toDomainModel
 import com.igorwojda.showcase.feature.album.domain.model.Album
 import com.igorwojda.showcase.feature.album.domain.repository.AlbumRepository
+import timber.log.Timber
 
 internal class AlbumRepositoryImpl(
     private val albumRetrofitService: AlbumRetrofitService,
     private val albumDao: AlbumDao,
 ) : AlbumRepository {
 
-    override suspend fun searchAlbum(phrase: String): Result<List<Album>> =
+    override suspend fun searchAlbum(phrase: String?): Result<List<Album>> =
         when (val apiResult = albumRetrofitService.searchAlbumAsync(phrase)) {
             is ApiResult.Success -> {
                 val albums = apiResult
@@ -23,9 +24,9 @@ internal class AlbumRepositoryImpl(
                     .results
                     .albumMatches
                     .album
-                    .also {
-                        val albums = it.map { it.toEntityModel() }
-                        albumDao.insertAlbums(albums)
+                    .also { albumsApiModels ->
+                        val albumsEntityModels = albumsApiModels.map { it.toEntityModel() }
+                        albumDao.insertAlbums(albumsEntityModels)
                     }
                     .map { it.toDomainModel() }
 
@@ -35,6 +36,8 @@ internal class AlbumRepositoryImpl(
                 Result.Failure()
             }
             is ApiResult.Exception -> {
+                Timber.e(apiResult.throwable)
+
                 val albums = albumDao
                     .getAll()
                     .map { it.toDomainModel() }
@@ -57,6 +60,8 @@ internal class AlbumRepositoryImpl(
                 Result.Failure()
             }
             is ApiResult.Exception -> {
+                Timber.e(apiResult.throwable)
+
                 val album = albumDao
                     .getAlbum(artistName, albumName, mbId)
                     .toDomainModel()
