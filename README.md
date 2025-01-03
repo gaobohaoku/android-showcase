@@ -1,23 +1,17 @@
 # 💎 Android Showcase 2.0
 
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.8.x-blue.svg)](https://kotlinlang.org)
-[![AGP](https://img.shields.io/badge/AGP-7.x-blue?style=flat)](https://developer.android.com/studio/releases/gradle-plugin)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.x-blue.svg)](https://kotlinlang.org)
+[![AGP](https://img.shields.io/badge/AGP-8.x-blue?style=flat)](https://developer.android.com/studio/releases/gradle-plugin)
 [![Gradle](https://img.shields.io/badge/Gradle-8.x-blue?style=flat)](https://gradle.org)
 
 [![Codebeat Badge](https://codebeat.co/badges/e9f1a825-b5bd-4c7a-aadc-7c8d0cf59310)](https://codebeat.co/projects/github-com-igorwojda-android-showcase-main)
 [![CodeFactor](https://www.codefactor.io/repository/github/igorwojda/android-showcase/badge)](https://www.codefactor.io/repository/github/igorwojda/android-showcase)
 
-Android Showcase project presents a modern approach to
-[Android](https://en.wikipedia.org/wiki/Android_(operating_system)) application development and
-provides architectural guidance. This project utilizes popular tools, libraries, linters, Gradle plugins,
-testing frameworks, and CI setup. It is a complete sample of a fully functional Android application.
+The Android Showcase project exemplifies modern [Android](https://en.wikipedia.org/wiki/Android_(operating_system)) application development methodologies and provides comprehensive architectural guidance. By integrating popular development tools, libraries, linters, and Gradle plugins, along with robust testing frameworks and Continuous Integration (CI) setup, this project offers a holistic sample of a fully operational Android application.
 
-The project is focusing on modular, scalable, maintainable, and testable [architecture](#architecture), leading
-[tech-stack](#tech-stack), and demonstrating the best development practices.
+The primary focus of this project lies in promoting a modular, scalable, maintainable, and testable [architecture](#architecture). It incorporates a leading-edge [tech-stack](#tech-stack) and embodies the finest practices in software development. While the application may appear straightforward, it encompasses all the crucial components that lay the groundwork for a robust, large-scale application.
 
-This application may look simple, but it has all of the pieces that will provide the rock-solid foundation for the
-larger application suitable for bigger teams and extended
-[application lifecycle](https://en.wikipedia.org/wiki/Application_lifecycle_management).
+The design principles and architectural choices applied in this project are ideally suited for larger teams and extended [application lifecycles](https://en.wikipedia.org/wiki/Application_lifecycle_management). This application is not just about showcasing functionalities, but it is also a testament to how well-structured and well-written code serves as a stable backbone for scalable and maintainable software development projects.
 
 - [💎 Android Showcase 2.0](#-android-showcase-20)
   - [Application Scope](#application-scope)
@@ -51,8 +45,7 @@ larger application suitable for bigger teams and extended
 
 ## Application Scope
 
-The `android-showcase` displays information about music albums. The data is loaded from the
-[Last.fm Music Discovery API](https://www.last.fm/api).
+The android-showcase is a simple application that presents information about various music albums. This data is dynamically sourced from the [Last.fm](https://www.last.fm/api)  music platform API.
 
 The app has a few screens located in multiple feature modules:
 
@@ -62,7 +55,7 @@ The app has a few screens located in multiple feature modules:
 - Favourites screen - empty (WiP)
   <br/><br/>
 
-<p float="left">
+<p>
   <img src="misc/image/screen_album_list.webp" width="250" />
   <img src="misc/image/screen_album_detail.webp" width="250" />
   <img src="misc/image/screen_favorites.webp" width="250" />
@@ -70,7 +63,7 @@ The app has a few screens located in multiple feature modules:
 
 ## Tech-Stack
 
-This project takes advantage of best practices, and many popular libraries and tools in the Android ecosystem. Most of
+This project takes advantage of best practices and many popular libraries and tools in the Android ecosystem. Most of
 the libraries are in the stable version unless there is a good reason to use non-stable dependency.
 
 * Tech-stack
@@ -117,7 +110,9 @@ the libraries are in the stable version unless there is a good reason to use non
 * Testing
   * [Unit Tests](https://en.wikipedia.org/wiki/Unit_testing) ([JUnit 5](https://junit.org/junit5/) via
     [android-junit5](https://github.com/mannodermaus/android-junit5)) - test individual classes
-  * [UI Tests](https://en.wikipedia.org/wiki/Graphical_user_interface_testing) ([Espresso](https://developer.android.com/training/testing/espresso)) - test user interface (WiP)
+  * [Konsist](https://docs.konsist.lemonappdev.com/) - test code conventions and architectural rules
+  * [UI Tests](https://en.wikipedia.org/wiki/Graphical_user_interface_testing) ([Espresso](https://developer.android.com/training/testing/espresso)) -
+    test user interface (WiP)
   * [Mockk](https://mockk.io/) - mocking framework
   * [Kluent](https://github.com/MarkusAmshove/Kluent) - assertion framework
 * Static analysis tools (linters)
@@ -137,7 +132,7 @@ the libraries are in the stable version unless there is a good reason to use non
   * [Type safe accessors](https://docs.gradle.org/7.0/release-notes.html)
 * GitHub Boots
   * [Renovate](https://github.com/renovatebot/renovate) - automatically update dependencies
-  * [Stale](https://github.com/marketplace/stale) - automatically close stale Issues and Pull Requests that tend to accumulate during a project
+  * [Stale](https://github.com/marketplace/stale) - automatically closes stale Issues and Pull Requests that tend to accumulate during a project
 * Other Tools
   * Charles Proxy - enabled network traffic sniffing in `debug` builds.
 
@@ -251,14 +246,14 @@ device persistent memory). These data sources can be treated as an implicit sub-
 multiple classes:
 
 - **Retrofit Service** - defines a set of API endpoints
-- **Retrofit Response Model** - definition of the network objects for given endpoint (top-level model for the data
+- **Retrofit Response Model** - definition of the network objects for a given endpoint (top-level model for the data
   consists of `ApiModels`)
 - **Retrofit Api Data Model** - defines the network objects (sub-objects of the `Response Model`)
 - **Room Database** - persistence database to store app data
 - **Room DAO** - interact with the stored data
 - **Room Entity** - definition of the stored objects
 
-Both `Retrofit API Data Models` and `Room Entities` contain annotations, so given framework understands how to parse the
+Both `Retrofit API Data Models` and `Room Entities` contain annotations, so the given framework understands how to parse the
 data into objects.
 
 ### Data Flow
@@ -308,16 +303,19 @@ the [.github/workflows](.github/workflows) folder.
 
 ### Pull Request Verification
 
-Series of workflows run (in parallel) for every opened PR and after merging PR to the `main` branch:
+Series of workflows run (in parallel) for every opened PR, and after merging PR to the `main` branch:
 
+* `./gradlew konsist_test:test --rerun-tasks` - checks that source code satisfies Konsist rules
 * `./gradlew lintDebug` - checks that source code satisfies Android lint rules
 * `./gradlew detektCheck` - checks that sourcecode satisfies detekt rules
-* `./gradlew detektApply` - applies detekt code formatting rules to sourcecode in-place
 * `./gradlew spotlessCheck` - checks that source code satisfies formatting steps.
-* `./gradlew spotlessApply` - applies code formatting steps to source code in-place.
 * `./gradlew testDebugUnitTest` - run unit tests
 * `./gradlew connectedCheck` - run UI tests
-* `./gradlew :app:bundleDebug` - create application bundle
+* `./gradlew :app:bundleDebug` - create an application bundle
+
+The following tasks cab be executed locally to make codebase compliant with the rules:
+* `./gradlew detektApply` - applies detekt code formatting rules to sourcecode in-place
+* `./gradlew spotlessApply` - applies code formatting steps to the source code in place.
 
 ## Design Decisions
 
@@ -347,7 +345,7 @@ There are a few ways to open this project.
 
 ### Plugins
 
-It is recommended installing [Detekt](https://plugins.jetbrains.com/plugin/10761-detekt) to Android Studio. To configure
+It is recommended to install [Detekt](https://plugins.jetbrains.com/plugin/10761-detekt) to Android Studio. To configure
 the plugin open Android Studio preferences, open `Tools`, open `Detekt` and add [detekt.yml](detekt.yml) configuration file.
 
 ## Upcoming Improvements
@@ -359,7 +357,7 @@ Check the list of all upcoming
 
 ## Inspiration
 
-Here are few additional resources.
+Here are a few additional resources.
 
 ### Cheatsheet
 
@@ -402,6 +400,10 @@ Other high-quality projects will help you to find solutions that work for your p
 
 ## Known Issues
 
+- In Gradle 8.1 the version catalog type safe API is not available for `buildSrc` directory, so dependencies and
+  versions have to be retrieved using type unsafe API:
+  - plugins are retrieved using string plugin ids
+  - versions (`kotlinCompilerExtensionVersion`) are retrieved using string version names
 - No usages are found for the `suspended` Kotlin `invoke`
   operator ([KTIJ-1053](https://youtrack.jetbrains.com/issue/KTIJ-1053/Find-usages-no-convention-usages-for-suspend-invoke-operator))
 - The `Material You Dynamic Colors` are not correctly applied to Fragment contents (only to Activity)
@@ -409,25 +411,20 @@ Other high-quality projects will help you to find solutions that work for your p
   using `findNavController()` ([ISSUE-142847973](https://issuetracker.google.com/issues/142847973),
   [STACKOVERFLOW-59275182](https://stackoverflow.com/questions/59275009/fragmentcontainerview-using-findnavcontroller/59275182))
 - Mockk is unable to mock some methods with implicit `continuation`
-  parameter in the `AlbumListViewModelTest` class ([Issue-957](https://github.com/mockk/mockk/issues/957))
-- Jetpack compose compiler depends
-  on [specific Kotlin version](https://developer.android.com/jetpack/androidx/releases/compose-kotlin). Kotlin upgrade
-  is blocked until compose catches up (error: This version (x.x.x) of the Compose Compiler requires Kotlin version x.x.x
-  but you appear to be using Kotlin version y.y.y which is not known to be compatible)  (disabled in Renovate)
-- KSP depends on
-  [specific Kotlin version](https://repo.maven.apache.org/maven2/com/google/devtools/ksp/symbol-processing-gradle-plugin/)
-  so, dependencies must be upgraded together  (disabled in Renovate).
-- `Mockk` can;t find an answer for suspended function, so test in the `AlbumDetailViewModelTest` was disabled
+  parameter in the `AlbumListViewModelTest` class ([Issue-957](https://github.com/mockk/mockk/issues/957)), , so test
+  in the `AlbumDetailViewModelTest` was disabled
+- Automatic Kotlin upgrade is disabled in Renovate, because these dependencies have to be updated together with Kotlin:
+  until:
+  - [Jetpack compose compiler](https://developer.android.com/jetpack/androidx/releases/compose-kotlin)
+  - [KSP](https://repo.maven.apache.org/maven2/com/google/devtools/ksp/symbol-processing-gradle-plugin/)
 - [Dynamic feature module](https://developer.android.com/studio/projects/dynamic-delivery) is not supported by
   `ANDROID_TEST_USES_UNIFIED_TEST_PLATFORM` yet.
 - ktlint `FileName` rule has to be disabled, because it is not compatible with fie contain a single extension
   [ISSUE-1657](https://github.com/pinterest/ktlint/issues/1657)
-- Delegate import is not provided when a variable has the same name as Delegate ([KTIJ-17403](https://youtrack.jetbrains.com/issue/KTIJ-17403))
+- Delegate import is not provided when a variable has the same name as
+  Delegate ([KTIJ-17403](https://youtrack.jetbrains.com/issue/KTIJ-17403))
 - `androidx.compose.runtime.getValue` and `androidx.compose.runtime.setValue` imports are can't be resolved
   automatically - they had to be added manually [KTIJ-23200](https://youtrack.jetbrains.com/issue/KTIJ-23200)
-- Gradle Versions Catalog code is marked as an error in `build.gradle.kts`
-  files ([KTIJ-19370](https://youtrack.jetbrains.com/issue/KTIJ-19370),
-  [KTIJ-19585](https://youtrack.jetbrains.com/issue/KTIJ-19585))
 - [ktlint import-ordering](https://github.com/pinterest/ktlint/blob/master/ktlint-ruleset-standard/src/main/kotlin/com/pinterest/ktlint/ruleset/standard/ImportOrderingRule.kt)
   rule conflicts with IDE default formatting rule, so it have to be [.editorconfig](.editorconfig) file.
   and [KTIJ-16847](https://youtrack.jetbrains.com/issue/KTIJ-16847))
@@ -440,6 +437,8 @@ Other high-quality projects will help you to find solutions that work for your p
 - Custom detekt config is hard to update ([Issue 4517](https://github.com/detekt/detekt/issues/4517))
 - Coil does not provide a way to automatically retry image load, so some images may not be loaded when connection speed
   is low ([Issue 132](https://github.com/coil-kt/coil/issues/132))
+- `buildFeatures` and `testOptions` blocks are incubating and have to be marked as `@Suppress
+  ("UnstableApiUsage")`
 
 ## Contribute
 

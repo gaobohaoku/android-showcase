@@ -1,24 +1,20 @@
 import com.android.build.api.dsl.ApplicationDefaultConfig
+import java.util.Locale
 
-@Suppress("DSL_SCOPE_VIOLATION") // Because of IDE bug https://youtrack.jetbrains.com/issue/KTIJ-19370
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.symbolProcessing)
-    alias(libs.plugins.safeArgs)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.testLogger)
-    alias(libs.plugins.junit5Android)
+    id("local.app")
 }
 
 android {
+    val catalogs = extensions.getByType<VersionCatalogsExtension>()
+    val libs = catalogs.named("libs")
+
     namespace = "com.igorwojda.showcase"
 
-    compileSdk = 33
+    compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
 
     defaultConfig {
-        minSdk = 26
-        targetSdk = 33
+        minSdk = libs.findVersion("minSdk").get().toString().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,13 +44,15 @@ android {
         }
     }
 
+    @Suppress("UnstableApiUsage")
     buildFeatures {
         viewBinding = true
+        buildConfig = true
         compose = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
+        kotlinCompilerExtensionVersion = libs.findVersion("kotlinCompilerExtensionVersion").get().toString()
     }
 
     compileOptions {
@@ -66,14 +64,9 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    @Suppress("UnstableApiUsage")
     testOptions {
         unitTests.isReturnDefaultValues = true
-    }
-}
-
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 
@@ -92,8 +85,8 @@ fun ApplicationDefaultConfig.buildConfigFieldFromGradleProperty(gradlePropertyNa
     val propertyValue = project.properties[gradlePropertyName] as? String
     checkNotNull(propertyValue) { "Gradle property $gradlePropertyName is null" }
 
-    val androidResourceName = "GRADLE_${gradlePropertyName.toSnakeCase()}".toUpperCase()
+    val androidResourceName = "GRADLE_${gradlePropertyName.toSnakeCase()}".uppercase(Locale.getDefault())
     buildConfigField("String", androidResourceName, propertyValue)
 }
 
-fun String.toSnakeCase() = this.split(Regex("(?=[A-Z])")).joinToString("_") { it.toLowerCase() }
+fun String.toSnakeCase() = this.split(Regex("(?=[A-Z])")).joinToString("_") { it.lowercase(Locale.getDefault()) }
